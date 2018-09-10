@@ -39,7 +39,26 @@ function shouldReturnThirteenOfEachSuit() {
   // array.forEach(x => { doStuff() })
   //
 
-
+  deck.forEach(
+    card => {
+      switch (card.suit) {
+        case 'C':
+          clubs++;
+          break;
+        case 'D':
+          diamonds++;
+          break;
+        case 'H':
+          hearts++;
+          break;
+        case 'S':
+          spades++;
+          break;
+        default:
+          throw new Error("Something bad happened.")
+      }
+    }
+  )
 
 
 
@@ -78,10 +97,10 @@ function shouldReturnFourOfEachRank() {
   // and increment if it is
   //
 
-
-
-
-
+  deck.map(card => card.rank)
+    .forEach(
+      rank =>
+        actual[rank] = (actual[rank] || 0) + 1)
 
   const expected = {
     2: 4,

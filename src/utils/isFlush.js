@@ -14,6 +14,6 @@ export default function isFlush(cards) {
   // Array's every() method
   //
 
-
-
+  return cards && cards.every(
+    card => card.suit === cards[0].suit)
 }

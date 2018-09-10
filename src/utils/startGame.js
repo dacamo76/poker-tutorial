@@ -6,7 +6,7 @@
  * @param {object} gameState
  * @param {Function} callback
  */
-function startGame(gameState, callback) {
+async function startGame(gameState, callback) {
 
   // /////////////////////////////////////////
   //
@@ -35,7 +35,9 @@ function startGame(gameState, callback) {
   //   node src/utils/startGame.js
   //
 
-
+  // dealPlayerCards(gameState, () =>
+  //   dealCommunityCards(gameState,
+  //     () => runBlinds(gameState, callback)));
 
 
 
@@ -65,9 +67,12 @@ function startGame(gameState, callback) {
   //
 
 
-
-
-
+  // dealPlayerCards(gameState)
+  //   .then(() => dealCommunityCards(gameState))
+  //   .then(() => runBlinds(gameState))
+  //   .then(callback)
+  //   .catch(err => console.error(err))
+  //   .finally(() => console.log('finally'))
 
 
 
@@ -97,8 +102,20 @@ function startGame(gameState, callback) {
   // to essentially halt execution until that method returns
   //
 
+  // dealPlayerCards(gameState)
+  // .then(() => dealCommunityCards(gameState))
+  // .then(() => runBlinds(gameState))
+  // .then(callback)
+  // .catch(err => console.error(err))
+  // .finally(() => console.log('finally'))
 
-
+  async function startGameImpl() {
+    await dealPlayerCards(gameState);
+    await dealCommunityCards(gameState);
+    await runBlinds(gameState);
+    callback && callback();
+  }
+  startGameImpl();
 }
 
 /**
@@ -122,7 +139,7 @@ function dealPlayerCards(gameState, callback) {
   }
 
   dealPlayerCard(0, () => dealPlayerCard(0, callback));
-  
+
   function dealPlayerCard(index, next) {
     if (index === gameState.players.length) {
       next();
@@ -213,17 +230,17 @@ if (require.main === module) {
   log('Starting game');
   const gameState = {
     deck: [
-      {rank: '2', suit: 'C'},
-      {rank: '2', suit: 'D'},
-      {rank: '2', suit: 'H'},
-      {rank: '2', suit: 'S'},
-      {rank: '3', suit: 'C'},
-      {rank: '3', suit: 'D'},
-      {rank: '3', suit: 'H'},
-      {rank: '3', suit: 'S'},
-      {rank: '4', suit: 'C'},
-      {rank: '4', suit: 'D'},
-      {rank: '4', suit: 'H'}
+      { rank: '2', suit: 'C' },
+      { rank: '2', suit: 'D' },
+      { rank: '2', suit: 'H' },
+      { rank: '2', suit: 'S' },
+      { rank: '3', suit: 'C' },
+      { rank: '3', suit: 'D' },
+      { rank: '3', suit: 'H' },
+      { rank: '3', suit: 'S' },
+      { rank: '4', suit: 'C' },
+      { rank: '4', suit: 'D' },
+      { rank: '4', suit: 'H' }
     ],
     communityCards: [],
     players: [

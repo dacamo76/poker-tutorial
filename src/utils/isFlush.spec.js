@@ -1,5 +1,10 @@
 import isFlush from './isFlush';
 
+it('Should return undefined if passed undefined', () => {
+  const actual = isFlush(undefined);
+  expect(actual).toBeUndefined();
+});
+
 it('Flush should be identified', () => {
 
   const cards = [

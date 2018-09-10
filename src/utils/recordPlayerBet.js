@@ -42,8 +42,13 @@ function recordPlayerBet(player, bet) {
   // const b = obj.b;
   //
 
+  if (!bet) {
+    return player;
+  }
 
-
+  let { playerBank, playerBet } = player;
+  playerBank -= bet;
+  playerBet += bet;
 
   // /////////////////////////////////////////
   //
@@ -68,7 +73,11 @@ function recordPlayerBet(player, bet) {
   // const overridden  = { ...obj, a: 0 };
   //
 
-
+  return {
+    ...player,
+    playerBank,
+    playerBet
+  }
 
 
 }
@@ -89,8 +98,8 @@ if (require.main === module) {
   };
   const afterBet = recordPlayerBet(original, 15);
 
-  console.dir({ original }, { colors: true});
-  console.dir({ afterBet }, {colors: true });
+  console.dir({ original }, { colors: true });
+  console.dir({ afterBet }, { colors: true });
   console.log(
     original === afterBet
       ? 'Replaced object but shouldn\'t have'
